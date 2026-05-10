@@ -1,14 +1,12 @@
-name: Deploy to Render
+from flask import Flask
+import os
 
-on:
-  push:
-    branches: [ "main" ]
+app = Flask(__name__)
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Dummy step
-      run: echo "Code pushed successfully!"
+@app.route('/')
+def home():
+    return "Hello DevOps!"
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
